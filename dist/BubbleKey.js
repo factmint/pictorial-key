@@ -66,7 +66,6 @@ define(['config', 'key'],
       var scaleSettings = this._scaleSettings;
 
       var bubbleScaleGroup = paper.g().attr("class", "fm-key-scale");
-      bubbleScaleGroup.transform("t390,490");
 
       // Render the title
       var bubbleScaleTitle = paper.text(0, 0, scaleSettings.title).attr({
@@ -112,7 +111,16 @@ define(['config', 'key'],
       bubbleScaleGroup.append(bubbleScaleTitle);
       bubbleScaleGroup.append(bubbleScaleGroupBubbles);
 
-      this.node.append(bubbleScaleGroup);
+      var keyGroup = this.node.select(".fm-key");
+      var keyGroupBBox = keyGroup.getBBox();
+      var bubbleKeyBBox = bubbleScaleGroup.getBBox();
+      var scaleOffsetY = 10;
+      keyGroup.append(bubbleScaleGroup);
+
+      bubbleScaleGroup.transform(
+        "t" + (keyGroupBBox.x + keyGroupBBox.width - bubbleKeyBBox.width/2 - Config.KEY_SIDE_PADDING ) +
+        "," + (keyGroupBBox.y + Config.TEXT_SIZE_MEDIUM + scaleOffsetY)
+      );
 
     };
 
