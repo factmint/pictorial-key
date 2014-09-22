@@ -92,8 +92,10 @@ define(['config', 'key'],
 
       // Middle
       var middleBubble = paper.g().attr("class", "fm-key-scale-midbubble");
+      var midValue = scaleSettings.minValue + (scaleSettings.maxValue - scaleSettings.minValue) / 2;
+      midValue = parseFloat( midValue.toFixed(12) );
       offsetY += (maxCircleRadius - midCircleRadius);
-      middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, scaleSettings.minValue + (scaleSettings.maxValue - scaleSettings.minValue) / 2).attr(styleEmptyText));
+      middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, midValue).attr(styleEmptyText));
       middleBubble.append(paper.circle(0, offsetY, midCircleRadius).attr(styleEmptyCircle));
 
 
