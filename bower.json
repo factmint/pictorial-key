@@ -1,5 +1,5 @@
 {
-  "name": "BubbleKey",
+  "name": "bubble-key",
   "version": "0.1.0",
   "authors": [
     "Dan.Palmer@telegraph.co.uk"
@@ -8,7 +8,7 @@
     "key": "https://git.assembla.com/descartes_diaphragm.key.git"
   },
   "description": "A key for that include a bubble scale group.",
-  "main": "dist/BubbleKey.js",
+  "main": "dist/bubble-key.js",
   "moduleType": [
     "amd"
   ],
