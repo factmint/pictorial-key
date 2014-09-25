@@ -5,7 +5,7 @@
     "Dan.Palmer@telegraph.co.uk"
   ],
   "dependencies": {
-    "key": "https://git.assembla.com/descartes_diaphragm.key.git#232-inheritable"
+    "key": "https://git.assembla.com/descartes_diaphragm.key.git"
   },
   "description": "A key for that include a bubble scale group.",
   "main": "dist/BubbleKey.js",
