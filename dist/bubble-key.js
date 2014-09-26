@@ -8,8 +8,14 @@ define(['config', 'key'],
       this._scaleSettings = scaleSettings;
 
       this.state = {
-        "fixed": null,
-        "hover": null
+        "fixed": {
+          "bubble": null,
+          "scale": null
+        },
+        "hover": {
+          "bubble": null,
+          "scale": null
+        }
       };
 
     }
@@ -17,7 +23,47 @@ define(['config', 'key'],
     BubbleKey.prototype = Object.create(Key.prototype);
 
     /**
+     * Creates ands places the bubble on the scale
+     * @private
+     * @param  {Object} state           The state in which to store the
+     *                                  information. This might can be the hover
+     *                                  or fixed state.
+     * @param  {Snap.Element} bubble          
+     * @param  {Number} maxCircleRadius 
+     */
+    BubbleKey.prototype._createScaleCircle = function( state, bubble, maxCircleRadius ){
+
+      var paper = this._paper;
+      var circle = bubble.clone();
+      var circleText = null;
+
+      state.scale = paper.g();
+
+      circleRadius = circle.attr("r");
+      circleYOffset = maxCircleRadius - circleRadius;
+
+      circle.attr({
+        "cx": 0,
+        "cy": maxCircleRadius + circleYOffset
+      });
+      circle.addClass("fm-scatter-bubble-active");
+      state.scale.append( circle );
+
+      circleText = paper.text(0, maxCircleRadius + circleYOffset + parseInt(Config.TEXT_SIZE_MEDIUM, 10) / 2, bubble.data("area value")).attr({
+        "fill": "#fff",
+        "font-family": Config.FONT_FAMILY,
+        "font-size": Config.TEXT_SIZE_MEDIUM,
+        "text-anchor": "middle"
+      });
+      state.scale.append(circleText);
+
+      this.node.select(".fm-key-scale-bubblegroup").append( state.scale );
+
+    };
+
+    /**
      * Hides the text labels on the bubble scale group
+     * @private
      */
     BubbleKey.prototype._hideScaleLabels = function() {
       this.node.selectAll(".fm-key-scale-maxbubble text, .fm-key-scale-midbubble text, .fm-key-scale-minbubble text").forEach(function _hideScaleLabels(text) {
@@ -27,6 +73,7 @@ define(['config', 'key'],
 
     /**
      * Shoes the text labels on the bubble scale group
+     * @private
      */
     BubbleKey.prototype._showScaleLabels = function() {
       this.node.selectAll(".fm-key-scale-maxbubble text, .fm-key-scale-midbubble text, .fm-key-scale-minbubble text").forEach(function _hideScaleLabels(text) {
@@ -139,22 +186,24 @@ define(['config', 'key'],
     BubbleKey.prototype.setScaleFixed = function(bubble) {
 
       if (bubble === null) {
-        this.state.fixed.remove();
-        this.state.fixed = null;
-        this.setScaleHover(null);
-        this._showScaleLabels();
+        this.state.fixed.scale.remove();
+        this.state.fixed.scale = null;
+        this.state.fixed.bubble.removeClass("fm-scatter-bubble-active");
+        this.state.fixed.bubble = null;
         return;
       }
 
-      if (this.state.hover !== null) {
-        this.state.fixed = this.state.hover;
-        this.state.hover = null;
-        this.state.fixed.attr("class", "fm-key-scale-fixed");
-        return;
-      }
+      var maxCircleRadius = getRadiusFromArea(this._scaleSettings.maxArea);
 
-      this.setScaleHover(bubble);
-      this.setScaleFixed(bubble);
+      this._hideScaleLabels();
+
+      this._createScaleCircle( this.state.fixed, bubble, maxCircleRadius );
+      this.state.fixed.bubble = bubble;
+      bubble.addClass("fm-scatter-bubble-active");
+
+      if( this.state.hover.bubble === bubble ){
+        this.setScaleHover( null );
+      }
 
     };
 
@@ -165,55 +214,32 @@ define(['config', 'key'],
     BubbleKey.prototype.setScaleHover = function(bubble) {
 
       if (bubble === null) {
-        if (this.state.hover !== null) {
-          this.state.hover.remove();
-          this.state.hover = null;
-          if (this.state.fixed === null) {
+        if (this.state.hover.scale !== null) {
+          this.state.hover.scale.remove();
+          this.state.hover.scale = null;
+          this.state.hover.bubble = null;
+          if (this.state.fixed.scale === null) {
             this._showScaleLabels();
           }
         }
         return;
       }
 
-      var paper = this._paper;
-      var keyGroup = this.node.select(".fm-key-scale-bubblegroup");
-      var circle = bubble.clone();
+      if( this.state.hover.scale !== null ){
+        this.setScaleHover(null);
+      }
+
       var maxCircleRadius = getRadiusFromArea(this._scaleSettings.maxArea);
-      var circleRadius;
-      var circleYOffset = 0;
-      var circleText;
 
       this._hideScaleLabels();
 
-      this.state.hover = paper.g().attr("class", "fm-key-scale-hover").data("clone id", bubble.id);
+      this._createScaleCircle( this.state.hover, bubble, maxCircleRadius );
+      this.state.hover.bubble = bubble;
 
-      circleRadius = circle.attr("r");
-      circleYOffset = maxCircleRadius - circleRadius;
-
-      circle.attr({
-        "cx": 0,
-        "cy": maxCircleRadius + circleYOffset
-      });
-      circle.addClass("fm-scatter-bubble--active");
-      this.state.hover.append(circle);
-
-      if (this.state.fixed === null) {
-
-        circleText = paper.text(0, maxCircleRadius + circleYOffset + parseInt(Config.TEXT_SIZE_MEDIUM, 10) / 2, bubble.data("area value")).attr({
-          "fill": "#fff",
-          "font-family": Config.FONT_FAMILY,
-          "font-size": Config.TEXT_SIZE_MEDIUM,
-          "text-anchor": "middle"
-        });
-        this.state.hover.append(circleText);
-
-        keyGroup.append(this.state.hover);
-
-      } else {
-
-        circle.attr("fill-opacity", "0");
-        this.state.hover.insertBefore(this.state.fixed);
-
+      if (this.state.fixed.scale !== null) {
+        this.state.hover.scale.select("circle").attr("fill-opacity", "0");
+        this.state.hover.scale.select("text").remove();
+        this.state.hover.scale.insertBefore(this.state.fixed.scale);
       }
 
     };
