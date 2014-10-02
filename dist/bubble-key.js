@@ -174,7 +174,7 @@ define(['config', 'key'],
       // Check if we need to extend the height of the key
       keyGroupBBox = keyGroup.getBBox();
       if( keyGroupBBox.height > this.node.select(".fm-key-container").getBBox().height  ){
-        this.setHeight( keyGroupBBox.height + Config.KEY_PADDING );
+        this.setHeight( keyGroupBBox.height + Config.KEY_PADDING_TOP + Config.KEY_PADDING_BOTTOM );
       }
 
     };
