@@ -37,6 +37,7 @@ define(['config', 'key'],
       var circle = bubble.clone();
       var circleText = null;
       var circleRadius = null;
+      var circleYOffset = 0;
 
       state.scale = paper.g();
 
