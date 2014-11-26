@@ -119,7 +119,7 @@ define(['config', 'key'],
 			// Render the title
 			var bubbleScaleTitle = paper.text(0, 0, scaleSettings.title).attr({
 				"font-family": Config.FONT_FAMILY,
-				"font-size": Config.TEXT_SIZE_MEDIUM,
+				"font-size": Config.TEXT_SIZE_SMALL,
 				"text-anchor": "middle"
 			});
 
