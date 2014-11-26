@@ -127,9 +127,9 @@ define(['config', 'key'],
       bubbleScaleGroupBubbles.transform("t0," + bubbleScaleTitle.getBBox().height);
 
       // Render the bubble scales
-      maxCircleRadius = getRadiusFromArea(scaleSettings.maxArea);
-      midCircleRadius = getRadiusFromArea(scaleSettings.minArea + (scaleSettings.maxArea - scaleSettings.minArea) / 2);
-      minCircleRadius = getRadiusFromArea(scaleSettings.minArea);
+      maxCircleRadius = scaleSettings.maxRadius;
+      midCircleRadius = (scaleSettings.minRadius + scaleSettings.maxRadius) / 2;
+      minCircleRadius = scaleSettings.minRadius;
 
 
       // Maximum
@@ -195,7 +195,7 @@ define(['config', 'key'],
         return;
       }
 
-      var maxCircleRadius = getRadiusFromArea(this._scaleSettings.maxArea);
+      var maxCircleRadius = this._scaleSettings.maxRadius;
 
       this._hideScaleLabels();
 
@@ -231,7 +231,7 @@ define(['config', 'key'],
         this.setScaleHover(null);
       }
 
-      var maxCircleRadius = getRadiusFromArea(this._scaleSettings.maxArea);
+      var maxCircleRadius = this._scaleSettings.maxRadius;
 
       this._hideScaleLabels();
 
@@ -247,14 +247,5 @@ define(['config', 'key'],
     };
 
     return BubbleKey;
-
-    /**
-     * Returns the radius from a given area
-     * @param  {Number} area
-     * @return {Number}
-     */
-    function getRadiusFromArea(area) {
-      return Math.sqrt(area / Math.PI);
-    }
 
   });
