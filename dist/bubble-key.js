@@ -170,7 +170,7 @@ define(['config', 'key'],
 
 			bubbleScaleGroup.transform(
 				"t" + (keyGroupBBox.x + keyGroupBBox.width - bubbleKeyBBox.width/2 - Config.KEY_SIDE_PADDING ) +
-				"," + (keyGroupBBox.y + Config.TEXT_SIZE_MEDIUM + scaleOffsetY + (maxBubble.getBBox().height / 2))
+				"," + (keyGroupBBox.y + Config.TEXT_SIZE_MEDIUM + (maxBubble.getBBox().height / 2))
 			);
 
 			// Check if we need to extend the height of the key
