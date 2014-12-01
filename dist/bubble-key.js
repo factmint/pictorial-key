@@ -127,9 +127,9 @@ define(['config', 'key'],
 			bubbleScaleGroupBubbles.transform("t0," + bubbleScaleTitle.getBBox().height);
 
 			// Render the bubble scales
-			maxCircleRadius = scaleSettings.maxRadius;
-			midCircleRadius = (scaleSettings.minRadius + scaleSettings.maxRadius) / 2;
-			minCircleRadius = scaleSettings.minRadius;
+			maxCircleRadius = scaleSettings.scale.end;
+			midCircleRadius = scaleSettings.scale.middle;
+			minCircleRadius = scaleSettings.scale.start;
 
 
 			// Maximum
@@ -141,10 +141,10 @@ define(['config', 'key'],
 
 			// Middle
 			var middleBubble = paper.g().attr("class", "fm-key-scale-midbubble");
-			var midValue = scaleSettings.minValue + (scaleSettings.maxValue - scaleSettings.minValue) / 2;
+			var midValue = scaleSettings.scale.midValue;
 			midValue = parseFloat( midValue.toFixed(12) );
 			offsetY += (maxCircleRadius - midCircleRadius);
-			middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, String(midValue)).attr(styleEmptyText));
+			middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, midValue.toPrecision(2)).attr(styleEmptyText));
 			middleBubble.append(paper.circle(0, offsetY, midCircleRadius).attr(styleEmptyCircle));
 
 
@@ -192,7 +192,7 @@ define(['config', 'key'],
 				return;
 			}
 
-			var maxCircleRadius = this._scaleSettings.maxRadius;
+			var maxCircleRadius = this._scaleSettings.scale.end;
 
 			this._hideScaleLabels();
 
@@ -228,7 +228,7 @@ define(['config', 'key'],
 				this.setScaleHover(null);
 			}
 
-			var maxCircleRadius = this._scaleSettings.maxRadius;
+			var maxCircleRadius = this._scaleSettings.scale.end;
 
 			this._hideScaleLabels();
 
