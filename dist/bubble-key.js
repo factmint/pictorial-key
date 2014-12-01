@@ -1,5 +1,5 @@
-define(['config', 'key'],
-	function(Config, Key) {
+define(['config', 'key', 'number-utils'],
+	function(Config, Key, NumberUtils) {
 
 		function BubbleKey(paper, x, y, width, columnWidth, values, maxValues, maxValueLength, scaleSettings) {
 
@@ -134,7 +134,7 @@ define(['config', 'key'],
 
 			// Maximum
 			var maxBubble = paper.g().attr("class", "fm-key-scale-maxbubble");
-			maxBubble.append(paper.text(0, offsetY + (maxCircleRadius - midCircleRadius) + circleTextMidY, String(scaleSettings.maxValue)).attr(styleEmptyText));
+			maxBubble.append(paper.text(0, offsetY + (maxCircleRadius - midCircleRadius) + circleTextMidY, NumberUtils.renderValue(scaleSettings.maxValue)).attr(styleEmptyText));
 			offsetY += maxCircleRadius;
 			maxBubble.append(paper.circle(0, offsetY, maxCircleRadius).attr(styleEmptyCircle));
 
@@ -144,14 +144,14 @@ define(['config', 'key'],
 			var midValue = scaleSettings.scale.midValue;
 			midValue = parseFloat( midValue.toFixed(12) );
 			offsetY += (maxCircleRadius - midCircleRadius);
-			middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, midValue.toPrecision(2)).attr(styleEmptyText));
+			middleBubble.append(paper.text(0, offsetY - midCircleRadius + (midCircleRadius - minCircleRadius) + circleTextMidY, NumberUtils.renderValue(midValue)).attr(styleEmptyText));
 			middleBubble.append(paper.circle(0, offsetY, midCircleRadius).attr(styleEmptyCircle));
 
 
 			// Minimum
 			offsetY += (midCircleRadius - minCircleRadius);
 			var minBubble = paper.g().attr("class", "fm-key-scale-minbubble");
-			minBubble.append(paper.text(0, offsetY - minCircleRadius + circleTextMidY + minCircleRadius, String(scaleSettings.minValue)).attr(styleEmptyText));
+			minBubble.append(paper.text(0, offsetY - minCircleRadius + circleTextMidY + minCircleRadius, NumberUtils.renderValue(scaleSettings.minValue)).attr(styleEmptyText));
 			minBubble.append(paper.circle(0, offsetY, minCircleRadius).attr(styleEmptyCircle));
 
 			// Appendage
