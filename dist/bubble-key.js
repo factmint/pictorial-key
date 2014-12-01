@@ -165,19 +165,16 @@ define(['config', 'key'],
 			var keyGroup = this.node.select(".fm-key");
 			var keyGroupBBox = keyGroup.getBBox();
 			var bubbleKeyBBox = bubbleScaleGroup.getBBox();
-			var scaleOffsetY = 10;
+
+			this.setHeight(Math.max(keyGroupBBox.height, bubbleKeyBBox.height + Config.KEY_PADDING_TOP + Config.KEY_PADDING_BOTTOM));
+
+			var scaleOffsetY = (this.node.getBBox().height - bubbleKeyBBox.height + Config.KEY_PADDING_TOP) / 2;
 			keyGroup.append(bubbleScaleGroup);
 
 			bubbleScaleGroup.transform(
-				"t" + (keyGroupBBox.x + keyGroupBBox.width - bubbleKeyBBox.width/2 - Config.KEY_SIDE_PADDING ) +
-				"," + (keyGroupBBox.y + (maxBubble.getBBox().height / 2))
+				"t" + (keyGroupBBox.x + keyGroupBBox.width - bubbleKeyBBox.width / 2 - Config.KEY_SIDE_PADDING) +
+				"," + (keyGroupBBox.y + scaleOffsetY)
 			);
-
-			// Check if we need to extend the height of the key
-			keyGroupBBox = keyGroup.getBBox();
-			if( keyGroupBBox.height > this.node.select(".fm-key-container").getBBox().height	){
-				this.setHeight( keyGroupBBox.height + Config.KEY_PADDING_TOP + Config.KEY_PADDING_BOTTOM );
-			}
 
 		};
 
