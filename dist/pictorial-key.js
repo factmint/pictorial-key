@@ -5,10 +5,8 @@ define(
 			Paper.prototype.pictorialKey = function(xOrigin, yOrigin, width, series) {
 				var paper = this;
 				
-				return paper.rect(xOrigin, yOrigin, width, 30).attr({
-					fill: 'yellow',
-					stroke: 'blue'
-				});
+				return paper.rect(xOrigin, yOrigin, width, 30)
+					.addClass('fm-pictorial-key');
 			}
 		});
 	}
