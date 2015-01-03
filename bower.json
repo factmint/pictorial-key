@@ -1,18 +1,18 @@
 {
-  "name": "bubble-key",
-  "version": "0.1.0",
+  "name": "pictorial-key",
+  "version": "0.0.1",
   "authors": [
-    "Dan.Palmer@telegraph.co.uk"
+    "chris.scott@factmint.com"
   ],
-  "dependencies": {
-    "key": "https://git.assembla.com/descartes_diaphragm.key.git"
-  },
-  "description": "A key for that include a bubble scale group.",
-  "main": "dist/bubble-key.js",
+  "description": "A simple key for glyphs",
+  "main": "dist/pictorial-key.js",
   "moduleType": [
     "amd"
   ],
-  "license": "MIT",
+  "dependencies": {
+    "Snap.svg": "*"
+  },
+  "license": "proprietory",
   "homepage": "http://factmint.com",
   "private": true,
   "ignore": [
