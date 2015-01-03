@@ -5,8 +5,16 @@ define(
 			Paper.prototype.pictorialKey = function(xOrigin, yOrigin, width, series) {
 				var paper = this;
 				
-				return paper.rect(xOrigin, yOrigin, width, 30)
-					.addClass('fm-pictorial-key');
+				var key = paper.group().addClass('fm-pictorial-key');
+				
+				var backgroundRectangle = paper.rect(xOrigin, yOrigin, width, 30);
+					
+				var borderTop = paper.line(xOrigin, yOrigin, xOrigin + width, yOrigin);
+					
+				key.append(backgroundRectangle);
+				key.append(borderTop);
+				
+				return key;
 			}
 		});
 	}
