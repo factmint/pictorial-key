@@ -19,6 +19,11 @@ define(
 					var glyph = paper.text(0, 0, series.glyph)
 						.attr('font-size', Config.KEY_GLYPH_FONT_SIZE)
 						.addClass(series.color);
+					
+					if (series.class !== null) {
+						glyph.addClass(series.class)
+					}
+					
 					var label = paper.text(glyph.getBBox().x2 + Config.KEY_GLYPH_RIGHT_PADDING, glyph.getBBox().cy, series.name)
 						.attr({
 							'font-size': Config.KEY_LABEL_FONT_SIZE,
